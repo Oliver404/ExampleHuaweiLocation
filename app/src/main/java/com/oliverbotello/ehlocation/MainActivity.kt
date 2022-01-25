@@ -18,6 +18,8 @@ import com.huawei.hms.site.api.SearchServiceFactory
 import com.huawei.hms.site.api.model.*
 import com.oliverbotello.ehlocation.utils.showMessage
 import com.oliverbotello.ehlocation.utils.showToast
+import java.lang.Exception
+import java.net.URLEncoder
 
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -32,8 +34,18 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        searchService = SearchServiceFactory.create(this, "CwEAAAAA/waiquscvsSvqfvqC3UQ+uj7Qiz9/VF5JfrNkLDD25qKpOimlpZ3tBji21CVHoV4jjqEJsS3jlmAGZnUTL5CvQ6SlUE=")
+        searchService = SearchServiceFactory.create(this, getApiKey())
         initView(savedInstanceState)
+    }
+
+    private fun getApiKey(): String {
+        var apiKey = "CwEAAAAA/waiquscvsSvqfvqC3UQ+uj7Qiz9/VF5JfrNkLDD25qKpOimlpZ3tBji21CVHoV4jjqEJsS3jlmAGZnUTL5CvQ6SlUE="
+
+        return try {
+            URLEncoder.encode(apiKey, "utf-8")
+        } catch (e: Exception) {
+            apiKey
+        }
     }
 
     private fun initView(savedInstanceState: Bundle?) {
